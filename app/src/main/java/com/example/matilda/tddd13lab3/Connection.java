@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -18,19 +19,26 @@ import java.util.ArrayList;
  * Created by Matilda on 2016-10-13.
  */
 public class Connection {
-    JSONArray jsonArray;
+    JSONObject jsonObject;
     public void makeConnection (int id, String search) throws IOException, JSONException {
-        URL url = new URL("http://flask-afteach.rhcloud.com/getnames/"+id+"/"+ search);
-        URLConnection urlCon = url.openConnection();
-        InputStream inputStream =urlCon.getInputStream();
+        if (!search.isEmpty()) {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        jsonArray = new JSONArray(br.readLine());
+            URL url = new URL("http://flask-afteach.rhcloud.com/getnames/" + id + "/" + search);
+            URLConnection urlCon = url.openConnection();
+            InputStream inputStream = urlCon.getInputStream();
+
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            jsonObject = new JSONObject(br.readLine());
+
+        }
 
     }
 
     public Object results() throws JSONException {
-        Log.d("Array", jsonArray.get(1).toString());
-        return jsonArray.get(1);
+        JSONArray array  = (JSONArray)jsonObject.get("result");
+        //Log.d("PRINTA", array.get(0).toString());
+
+        return array;
     }
 }

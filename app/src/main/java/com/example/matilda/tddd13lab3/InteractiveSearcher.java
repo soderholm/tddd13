@@ -8,12 +8,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.EditText;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -43,6 +45,7 @@ public class InteractiveSearcher extends EditText{
                         String searchString = charSequence.toString();
                         Log.d("Thread", searchString);
                         Connection con = new Connection();
+
                         try {
                             con.makeConnection(id, searchString);
                         } catch (IOException e) {
